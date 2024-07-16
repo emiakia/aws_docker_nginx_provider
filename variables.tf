@@ -100,7 +100,7 @@ variable "wslt_tags" {}
 
 variable "asg_desired_capacity" {
   type        = number
-  default     = 3
+  default     = 2
   description = "Desired capacity of the Auto Scaling group."
 }
 

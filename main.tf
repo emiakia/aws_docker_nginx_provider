@@ -15,57 +15,6 @@ module "alb_security_group" {
 }
 
 
-<<<<<<< HEAD
-  user_data = <<-EOF
-<<<<<<< HEAD
-                #!/bin/bash
-
-                # Get playbook from Github
-                wget https://raw.githubusercontent.com/emiakia/nginx_provider/main/playbook.yml
-
-                # Define the path to your Ansible playbook
-                PLAYBOOK_PATH="./playbook.yml"
-
-                # Update the system
-                echo "Updating system..."
-                sudo yum update -y
-
-                # Install Ansible
-                echo "Installing Ansible..."
-                sudo yum install -y ansible
-
-                # Verify Ansible installation
-                echo "Verifying Ansible installation..."
-                ansible --version
-
-                # Run the Ansible playbook
-                echo "Running Ansible playbook..."
-                ansible-playbook "$PLAYBOOK_PATH"
-=======
-              #!/bin/bash
-              # Update the package index
-              yum update -y
-
-              # Install git and Docker
-              yum install -y git docker
-
-              # Start Docker service
-              systemctl start docker
-              systemctl enable docker
-
-              # Clone the GitHub repository
-              git clone https://github.com/emiakia/terraform-alb-asg-nginx.git /home/ec2-user/nginx_provider
-
-              # Run the install script
-              chmod +x /home/ec2-user/nginx_provider/install_nginx_docker.sh
-              /home/ec2-user/nginx_provider/install_nginx_docker.sh
->>>>>>> ec819e9 (Initialize)
-              EOF
-
-  tags = {
-    Name = "web-server-instance"
-  }
-=======
 # Create Security Group for EC2 Instances
 module "ec2_security_group" {
   source = "./modules/security_group"
@@ -76,7 +25,6 @@ module "ec2_security_group" {
   sg_ingress_rules = var.ec2_sg_ingress_rules
   sg_egress_rules  = var.ec2_sg_egress_rule
   sg_tags          = var.ec2_sg_tags
->>>>>>> a4cfcdc (ALB ASG Launch instance with Nginx completly modular)
 }
 
 # Launch Template

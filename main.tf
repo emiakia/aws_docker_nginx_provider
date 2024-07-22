@@ -40,6 +40,7 @@ resource "aws_instance" "web_server" {
   security_groups = [aws_security_group.web_sg.name]
 
   user_data = <<-EOF
+<<<<<<< HEAD
                 #!/bin/bash
 
                 # Get playbook from Github
@@ -63,6 +64,25 @@ resource "aws_instance" "web_server" {
                 # Run the Ansible playbook
                 echo "Running Ansible playbook..."
                 ansible-playbook "$PLAYBOOK_PATH"
+=======
+              #!/bin/bash
+              # Update the package index
+              yum update -y
+
+              # Install git and Docker
+              yum install -y git docker
+
+              # Start Docker service
+              systemctl start docker
+              systemctl enable docker
+
+              # Clone the GitHub repository
+              git clone https://github.com/yourusername/nginx_provider.git /home/ec2-user/nginx_provider
+
+              # Run the install script
+              chmod +x /home/ec2-user/nginx_provider/install_nginx_docker.sh
+              /home/ec2-user/nginx_provider/install_nginx_docker.sh
+>>>>>>> ec819e9 (Initialize)
               EOF
 
   tags = {

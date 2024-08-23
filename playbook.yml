@@ -1,0 +1,64 @@
+---
+- name: Install Docker and run NGINX container with a custom index.html
+  hosts: webservers
+  become: yes
+  tasks:
+    # Install necessary packages
+    - name: Install Docker dependencies
+      yum:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - yum-utils
+        - device-mapper-persistent-data
+        - lvm2
+
+    - name: Add Docker repository
+      command: >
+        yum-config-manager --add-repo
+        https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    - name: Install Docker
+      yum:
+        name: docker-ce
+        state: present
+
+    - name: Start Docker service
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    # Pull NGINX Docker image
+    - name: Pull NGINX Docker image
+      command: docker pull nginx:latest
+
+    # Create custom index.html
+    - name: Create index.html file
+      copy:
+        content: |
+          <html>
+            <head><title>Hello from Docker NGINX!</title></head>
+            <body><h1>Hello World from NGINX on Docker!</h1></body>
+          </html>
+        dest: /home/ec2-user/index.html
+
+    # Run NGINX container with custom index.html
+    - name: Run NGINX container
+      command: >
+        docker run -d --name nginx-container -p 80:80
+        -v /home/ec2-user/index.html:/usr/share/nginx/html/index.html:ro nginx:latest
+      args:
+        creates: /usr/share/nginx/html/index.html
+
+    # Ensure the NGINX container is running
+    - name: Ensure NGINX container is running
+      command: docker ps -q --filter "name=nginx-container"
+      register: nginx_container_status
+
+    - name: Fail if NGINX container is not running
+      fail:
+        msg: "NGINX container is not running"
+      when: nginx_container_status.stdout == ""

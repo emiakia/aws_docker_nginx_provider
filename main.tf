@@ -43,10 +43,10 @@ resource "aws_instance" "web_server" {
                 #!/bin/bash
 
                 # Get playbook from Github
-                wget -O /home/ec2-user/nginx_provider/install_nginx_docker.sh https://raw.githubusercontent.com/emiakia/terraform-alb-asg-nginx/main/install_nginx_docker.sh
+                wget https://raw.githubusercontent.com/emiakia/nginx_provider/main/playbook.yml
 
                 # Define the path to your Ansible playbook
-                PLAYBOOK_PATH="./nginx_provider/playbook.yml"
+                PLAYBOOK_PATH="./playbook.yml"
 
                 # Update the system
                 echo "Updating system..."

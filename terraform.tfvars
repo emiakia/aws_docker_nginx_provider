@@ -74,7 +74,6 @@ ec2_sg_tags = {
   "Name"   = "my-security-group"
 }
 
-
 ##################################################
 #Variable of launch template
 wslt_name_prefix = "web-server-"

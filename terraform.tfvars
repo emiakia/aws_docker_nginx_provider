@@ -81,24 +81,29 @@ wslt_image_id    = "ami-0de02246788e4a354"
 # wslt_instance_type = "t2.micro"
 wslt_key_name  = "devKey"
 wslt_user_data = <<-EOF
-              #!/bin/bash
-              # Update the package index
-              yum update -y
+                #!/bin/bash
 
-              # Install git and Docker
-              yum install -y git docker
+                # Get playbook from Github
+                wget https://raw.githubusercontent.com/emiakia/terraform-alb-asg-nginx/main/playbook.yml
 
-              # Start Docker service
-              systemctl start docker
-              systemctl enable docker
+                # Define the path to your Ansible playbook
+                PLAYBOOK_PATH="./playbook.yml"
 
-              # Clone the GitHub repository
-              # git clone https://github.com/emiakia/terraform-alb-asg-nginx.git /home/ec2-user/nginx_provider
-              wget -O /home/ec2-user/nginx_provider/install_nginx_docker.sh https://raw.githubusercontent.com/emiakia/terraform-alb-asg-nginx/main/install_nginx_docker.sh
+                # Update the system
+                echo "Updating system..."
+                sudo yum update -y
 
-              # Run the install script
-              chmod +x /home/ec2-user/nginx_provider/install_nginx_docker.sh
-              /home/ec2-user/nginx_provider/install_nginx_docker.sh
+                # Install Ansible
+                echo "Installing Ansible..."
+                sudo yum install -y ansible
+
+                # Verify Ansible installation
+                echo "Verifying Ansible installation..."
+                ansible --version
+
+                # Run the Ansible playbook
+                echo "Running Ansible playbook..."
+                ansible-playbook "$PLAYBOOK_PATH"
               EOF
 
 # wslt_create_before_destroy = true

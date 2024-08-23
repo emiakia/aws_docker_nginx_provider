@@ -26,7 +26,7 @@ cat <<EOF > index.html
 <body>
     <h1>Hello World</h1>
 	<br>
-	<h1>Hello World from $(hostname -f)</h1>
+	<h1>From private IP: $(hostname -f)</h1>
 </body>
 
 </html>

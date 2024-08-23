@@ -1,28 +1,12 @@
 ---
 - name: Install Docker and run NGINX container with a custom index.html
-  hosts: webservers
+  hosts: localhost
   become: yes
-  tasks:
+  tasks::wq
     # Install necessary packages
-    - name: Install Docker dependencies
-      yum:
-        name: "{{ item }}"
-        state: present
-      loop:
-        - yum-utils
-        - device-mapper-persistent-data
-        - lvm2
-
-    - name: Add Docker repository
-      command: >
-        yum-config-manager --add-repo
-        https://download.docker.com/linux/centos/docker-ce.repo
-      args:
-        creates: /etc/yum.repos.d/docker-ce.repo
-
     - name: Install Docker
       yum:
-        name: docker-ce
+        name: docker
         state: present
 
     - name: Start Docker service

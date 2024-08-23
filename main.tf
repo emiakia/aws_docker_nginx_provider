@@ -52,10 +52,6 @@ resource "aws_instance" "web_server" {
                 echo "Updating system..."
                 sudo yum update -y
 
-                # Install EPEL repository (Extra Packages for Enterprise Linux)
-                echo "Installing EPEL repository..."
-                sudo yum install -y epel-release
-
                 # Install Ansible
                 echo "Installing Ansible..."
                 sudo yum install -y ansible
@@ -64,23 +60,9 @@ resource "aws_instance" "web_server" {
                 echo "Verifying Ansible installation..."
                 ansible --version
 
-                # Check if the playbook file exists
-                if [ ! -f "$PLAYBOOK_PATH" ]; then
-                echo "Playbook file not found: $PLAYBOOK_PATH"
-                exit 1
-                fi
-
                 # Run the Ansible playbook
                 echo "Running Ansible playbook..."
                 ansible-playbook "$PLAYBOOK_PATH"
-
-                # Check the result of the playbook execution
-                if [ $? -eq 0 ]; then
-                echo "Ansible playbook executed successfully."
-                else
-                echo "Ansible playbook execution failed."
-                exit 1
-                fi
               EOF
 
   tags = {

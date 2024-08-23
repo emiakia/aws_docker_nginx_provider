@@ -2,7 +2,7 @@
 - name: Install Docker and run NGINX container with a custom index.html
   hosts: localhost
   become: yes
-  tasks::wq
+  tasks:
     # Install necessary packages
     - name: Install Docker
       yum:

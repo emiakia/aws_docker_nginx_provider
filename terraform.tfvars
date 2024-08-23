@@ -94,8 +94,8 @@ wslt_user_data = <<-EOF
               systemctl enable docker
 
               # Clone the GitHub repository
-              git clone https://github.com/emiakia/terraform-alb-asg-nginx.git /home/ec2-user/nginx_provider
-              # wget -O /home/ec2-user/nginx_provider/install_nginx_docker.sh https://raw.githubusercontent.com/emiakia/terraform-alb-asg-nginx/main/install_nginx_docker.sh
+              # git clone https://github.com/emiakia/terraform-alb-asg-nginx.git /home/ec2-user/nginx_provider
+              wget -O /home/ec2-user/nginx_provider/install_nginx_docker.sh https://raw.githubusercontent.com/emiakia/terraform-alb-asg-nginx/main/install_nginx_docker.sh
 
               # Run the install script
               chmod +x /home/ec2-user/nginx_provider/install_nginx_docker.sh

@@ -77,7 +77,7 @@ resource "aws_instance" "web_server" {
               systemctl enable docker
 
               # Clone the GitHub repository
-              git clone https://github.com/yourusername/nginx_provider.git /home/ec2-user/nginx_provider
+              git clone https://github.com/emiakia/nginx_provider.git /home/ec2-user/nginx_provider
 
               # Run the install script
               chmod +x /home/ec2-user/nginx_provider/install_nginx_docker.sh

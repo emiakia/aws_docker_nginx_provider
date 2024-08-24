@@ -15,17 +15,25 @@
         state: started
         enabled: true
 
+    # Get the local IP address
+    - name: Get the local IP address
+      command: hostname -I | awk '{print $1}'
+      register: local_ip
+
     # Pull NGINX Docker image
     - name: Pull NGINX Docker image
       command: docker pull nginx:latest
 
-    # Create custom index.html
-    - name: Create index.html file
+    # Create custom index.html with the local IP
+    - name: Create index.html file with local IP address
       copy:
         content: |
           <html>
             <head><title>Hello from Docker NGINX!</title></head>
-            <body><h1>Hello World from NGINX on Docker!</h1></body>
+            <body>
+              <h1>Hello World from NGINX on Docker!</h1>
+              <p>Your local IP address is: {{ local_ip.stdout }}</p>
+            </body>
           </html>
         dest: /home/ec2-user/index.html
 

@@ -15,24 +15,19 @@
         state: started
         enabled: true
 
-    # Get the local IP address using the shell module
+    # Get the local IP address
     - name: Get the local IP address
-      shell: hostname -I | awk '{print $1}'
+      shell: "hostname -I | awk '{print $1}'"
       register: local_ip
 
-    # Pull NGINX Docker image
-    - name: Pull NGINX Docker image
-      command: docker pull nginx:latest
-
-    # Create custom index.html with the local IP address
-    - name: Create index.html file with local IP address
+    # Create custom index.html
+    - name: Create index.html file
       copy:
         content: |
           <html>
             <head><title>Hello from Docker NGINX!</title></head>
-            <body>
-              <h1>Hello World from NGINX on Docker!</h1>
-              <p>Your local IP address is: {{ local_ip.stdout }}</p>
+            <body><h1>Hello World from NGINX on Docker!</h1> 
+            <p>Local IP: {{ local_ip.stdout }}</p>
             </body>
           </html>
         dest: /home/ec2-user/index.html
@@ -42,15 +37,3 @@
       command: >
         docker run -d --name nginx-container -p 80:80
         -v /home/ec2-user/index.html:/usr/share/nginx/html/index.html:ro nginx:latest
-      args:
-        creates: /usr/share/nginx/html/index.html
-
-    # Ensure the NGINX container is running
-    - name: Ensure NGINX container is running
-      command: docker ps -q --filter "name=nginx-container"
-      register: nginx_container_status
-
-    - name: Fail if NGINX container is not running
-      fail:
-        msg: "NGINX container is not running"
-      when: nginx_container_status.stdout == ""

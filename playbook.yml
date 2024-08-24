@@ -16,15 +16,21 @@
         enabled: true
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 52635d9 (ALB on ASG with Nginx By Ansible)
     # Get the local IP address
     - name: Get the local IP address
       shell: "hostname -I | awk '{print $1}'"
       register: local_ip
+<<<<<<< HEAD
 =======
     # Pull NGINX Docker image
     - name: Pull NGINX Docker image
       command: docker pull nginx:latest
 >>>>>>> 863328d (nginx with ansible)
+=======
+>>>>>>> 52635d9 (ALB on ASG with Nginx By Ansible)
 
     # Create custom index.html
     - name: Create index.html file
@@ -33,12 +39,18 @@
           <html>
             <head><title>Hello from Docker NGINX!</title></head>
 <<<<<<< HEAD
+<<<<<<< HEAD
             <body><h1>Hello World from NGINX on Docker!</h1> 
             <p>Local IP: {{ local_ip.stdout }}</p>
             </body>
 =======
             <body><h1>Hello World</h1><br><h1>From private IP: $(hostname -f)</h1></body>
 >>>>>>> 863328d (nginx with ansible)
+=======
+            <body><h1>Hello World from NGINX on Docker!</h1> 
+            <p>Local IP: {{ local_ip.stdout }}</p>
+            </body>
+>>>>>>> 52635d9 (ALB on ASG with Nginx By Ansible)
           </html>
         dest: /home/ec2-user/index.html
 
@@ -47,6 +59,7 @@
       command: >
         docker run -d --name nginx-container -p 80:80
         -v /home/ec2-user/index.html:/usr/share/nginx/html/index.html:ro nginx:latest
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
       args:
@@ -62,3 +75,5 @@
         msg: "NGINX container is not running"
       when: nginx_container_status.stdout == ""
 >>>>>>> 863328d (nginx with ansible)
+=======
+>>>>>>> 52635d9 (ALB on ASG with Nginx By Ansible)

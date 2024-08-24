@@ -15,16 +15,16 @@
         state: started
         enabled: true
 
-    # Get the local IP address
+    # Get the local IP address using the shell module
     - name: Get the local IP address
-      command: hostname -I | awk '{print $1}'
+      shell: hostname -I | awk '{print $1}'
       register: local_ip
 
     # Pull NGINX Docker image
     - name: Pull NGINX Docker image
       command: docker pull nginx:latest
 
-    # Create custom index.html with the local IP
+    # Create custom index.html with the local IP address
     - name: Create index.html file with local IP address
       copy:
         content: |

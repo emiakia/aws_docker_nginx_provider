@@ -48,6 +48,8 @@ The project automates the deployment of a scalable and secure web application in
 - **Target Group**: Routes traffic from the ALB to the EC2 instances.
 - **Listener**: Configures how the ALB handles incoming requests.
 
+Additionally, once the EC2 instances are launched, the project automatically installs Ansible, retrieves a playbook from GitHub, and uses it to install Docker and run an NGINX container with a custom `index.html` file.
+
 ## Project Structure
 
 - **`main.tf`**: The main entry point for the Terraform configuration, which orchestrates the use of all modules.
@@ -62,6 +64,25 @@ The project automates the deployment of a scalable and secure web application in
   - **`alb/`**: Sets up the Application Load Balancer (ALB).
   - **`lb_target_group/`**: Manages the creation of a target group for the ALB.
   - **`lb_listener/`**: Configures the ALB listener.
+
+## Additional Functionality
+
+### Automated Deployment
+
+After provisioning the EC2 instances, the following steps are performed:
+
+1. **Install Ansible**: Ansible is installed on the EC2 instances.
+2. **Fetch Playbook from GitHub**: The playbook, which is part of the project's files, is retrieved from a GitHub repository.
+3. **Install Docker**: Docker is installed on the EC2 instances.
+4. **Run NGINX Container**: An NGINX Docker container is started. The container serves a custom `index.html` file that includes the local IP address of the EC2 instance.
+
+### Playbook Details
+
+The playbook, located in the project's files, automates the following tasks:
+
+- **Docker Installation**: Installs Docker on the EC2 instance.
+- **Index.html Creation**: Generates an `index.html` file with the local IP address.
+- **NGINX Container Deployment**: Runs an NGINX Docker container with the custom HTML file.
 
 ## Usage
 
